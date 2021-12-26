@@ -1,0 +1,5 @@
+10 10
+5 5 N
+LLLLMM
+3 3 E
+RLRLMMR
