@@ -3,6 +3,7 @@
 
 ## Test Coverage
 
+![image description](test-coverage.png)
 
 ## Setup
 
