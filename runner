@@ -10,13 +10,11 @@ use App\Actions\Rotations\RotateRight;
 use App\Plateau;
 use App\Simulator;
 
-$movementBuilder = new MovementActions([new OneStepMovement()]);
-$rotateBuilder   = new RotationActions([
-    new RotateLeft(),
-    new RotateRight(),
-]);
 
 $plateau   = new Plateau();
+
+$movementBuilder = new MovementActions([new OneStepMovement()]);
+$rotateBuilder   = new RotationActions([new RotateLeft(),new RotateRight()]);
 $simulator = new Simulator($plateau, $movementBuilder, $rotateBuilder);
 
 $simulator->run($argv[1]);

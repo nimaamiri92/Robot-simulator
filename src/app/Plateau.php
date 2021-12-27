@@ -2,41 +2,41 @@
 
 namespace App;
 
-
 class Plateau
 {
-    private $width;
+    private int $width;
 
-    private $height;
+    private int $height;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
     /**
-     * @param mixed $width
+     * @param $width
+     *
+     * @return void
      */
-    public function setWidth($width): void
+    public function setWidth(int $width): void
     {
         $this->width = $width;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getHeight()
+    private function getHeight(): int
     {
         return $this->height;
     }
 
     /**
-     * @param mixed $height
+     * @param $height
+     *
+     * @return void
      */
-    public function setHeight($height): void
+    public function setHeight(int $height): void
     {
         $this->height = $height;
     }

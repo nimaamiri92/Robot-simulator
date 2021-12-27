@@ -4,7 +4,7 @@ namespace App;
 
 use App\Actions\MovementActions;
 use App\Actions\RotationActions;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class Robot
 {
@@ -17,11 +17,11 @@ class Robot
 
     private const COUNT_OF_DIRECTIONS = 4;
 
-    private $direction;
+    private string $direction;
 
-    private $x = 0;
+    private int $x = 0;
 
-    private $y = 0;
+    private int $y = 0;
 
     private RotationActions $rotateBuilder;
 
@@ -44,6 +44,8 @@ class Robot
 
     /**
      * @param int $x
+     *
+     * @return void
      */
     public function setX(int $x): void
     {
@@ -60,6 +62,8 @@ class Robot
 
     /**
      * @param int $y
+     *
+     * @return void
      */
     public function setY(int $y): void
     {
@@ -67,15 +71,17 @@ class Robot
     }
 
     /**
-     * @return null
+     * @return string
      */
-    public function getDirection()
+    public function getDirection(): string
     {
         return $this->direction;
     }
 
     /**
-     * @param null $direction
+     * @param string $direction
+     *
+     * @return void
      */
     public function setDirection(string $direction): void
     {
@@ -83,12 +89,12 @@ class Robot
     }
 
     /**
-     * @param array $landData
+     * @param string $landData
      * @param string $actions
      *
      * @return array
      */
-    public function run(string $landData, string $actions)
+    public function run(string $landData, string $actions): array
     {
         $this->land($landData);
         $this->doActions($actions);
@@ -97,15 +103,13 @@ class Robot
     }
 
     /**
-     * @param int $x
-     * @param int $y
-     * @param string $direction
+     * @param string $landData
      *
      * @return void
      */
     public function land(string $landData): void
     {
-        list($x,$y,$direction) = explode(' ',$landData);
+        [$x, $y, $direction] = explode(' ', $landData);
 
         if ($this->planet->isInPlanetBorders($x, $y)) {
             throw new InvalidArgumentException('Robot can not land on this coordinate');
@@ -121,13 +125,13 @@ class Robot
     }
 
     /**
-     * @param string $commands
+     * @param string $command
      *
      * @return void
      */
-    public function doActions(string $commands): void
+    public function doActions(string $command): void
     {
-        $actions = str_split($commands);
+        $actions = str_split($command);
         foreach ($actions as $action) {
             $this->move($action);
             $this->rotate($action);
@@ -154,6 +158,7 @@ class Robot
     public function move($action): void
     {
         $move = $this->movementBuilder->makeMovement($action);
+
         switch ($this->getDirection()) {
             case self::NORTH_DIRECTION;
                 $this->y += $move;
@@ -219,7 +224,7 @@ class Robot
      */
     public function directionExist(string $direction): bool
     {
-        return in_array($direction, $this->getDirections());
+        return in_array($direction, $this->getDirections(), true);
     }
 
 }

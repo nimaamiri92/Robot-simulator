@@ -17,6 +17,11 @@ class RotationActions
         $this->rotates = $rotate;
     }
 
+    /**
+     * @param $action
+     *
+     * @return int
+     */
     public function makeRotation($action): int
     {
         foreach ($this->rotates as $rotate){

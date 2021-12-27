@@ -18,6 +18,11 @@ class MovementActions
         $this->movements = $movement;
     }
 
+    /**
+     * @param $action
+     *
+     * @return int
+     */
     public function makeMovement($action): int
     {
         foreach ($this->movements as $movement) {

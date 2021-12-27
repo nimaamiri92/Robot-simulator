@@ -25,25 +25,23 @@ class Simulator
      *
      * @return void
      */
-    public function run($data)
+    public function run($data): void
     {
         $inputs = $this->parseInputs($data);
 
-        $this->buildPlateau($inputs);
+        $this->setPlateauCoordinate($inputs);
         $robots  = $this->dispatchRobots($inputs);
-        $reports = $this->parseRobotsReport($robots);
 
-        echo $reports;
+
+        echo $this->getRobotsReport($robots);
     }
 
-
     /**
-     * @param $data
-     * @param array $inputs
+     * @param string $data
      *
-     * @return void
+     * @return array
      */
-    private function parseInputs($data): array
+    private function parseInputs(string $data): array
     {
         $inputs = [];
         $handle = fopen($data, 'rb');
@@ -57,18 +55,18 @@ class Simulator
         return $inputs;
     }
 
-
     /**
      * @param $inputs
      *
      * @return void
      */
-    private function buildPlateau(&$inputs): void
+    private function setPlateauCoordinate(&$inputs): void
     {
         $planetData = trim(array_shift($inputs));
-        $this->plateau->setWidth($planetData[0]);
-        $this->plateau->setHeight($planetData[1]);
+        $this->plateau->setWidth((int) $planetData[0]);
+        $this->plateau->setHeight((int) $planetData[1]);
     }
+
     /**
      * @param array $inputs
      *
@@ -78,22 +76,28 @@ class Simulator
     {
         $robots = [];
         while ($inputs) {
-            $robots[] = (new Robot($this->plateau, $this->rotate, $this->movement))->run(
-                trim(array_shift($inputs)),
-                trim(array_shift($inputs))
-            );
+            $robot    = new Robot($this->plateau, $this->rotate, $this->movement);
+            $landData = trim(array_shift($inputs));
+            $command  = trim(array_shift($inputs));
+
+            $robots[] = $robot->run($landData, $command);
         }
 
         return $robots;
     }
 
-    private function parseRobotsReport(array $robots)
+    /**
+     * @param array $robots
+     *
+     * @return string
+     */
+    private function getRobotsReport(array $robots): string
     {
         $reports = '';
         foreach ($robots as $robot) {
             $reports .= implode(' ', $robot) . PHP_EOL;
         }
 
-        return trim($reports,PHP_EOL);
+        return trim($reports);
     }
 }
