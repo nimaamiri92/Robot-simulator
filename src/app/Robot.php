@@ -188,16 +188,15 @@ class Robot
         $rotate = $this->rotateBuilder->makeRotation($action);
 
         //convert compose directions to string (`NESW`) because we can easily access to -1 index for example
-        $stringDirection = $this->getDirections('');
+        $stringDirections = $this->getDirections('');
 
-        $position = strpos($stringDirection, $this->direction);
-        $position += $rotate;
+        $position = strpos($stringDirections, $this->direction) + $rotate;
 
         if ($position >= self::COUNT_OF_DIRECTIONS) {
             $position = self::COUNT_OF_DIRECTIONS - $position;
         }
 
-        $this->direction = $stringDirection[$position];
+        $this->direction = $stringDirections[$position];
     }
 
     /**
